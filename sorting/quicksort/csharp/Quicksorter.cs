@@ -2,7 +2,7 @@
  * Written by Matt Nedrich
  * mattnedrich@gmail.com
  * www.mattnedrich.com
-*/ 
+*/
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ namespace mattnedrich.algorithms.sorting
     public class Quicksorter<T> where T : IComparable<T>
     {
         protected Random random;
-        
+
         public Quicksorter()
         {
             random = new Random();
@@ -22,19 +22,19 @@ namespace mattnedrich.algorithms.sorting
 
         public void Sort(IList<T> items)
         {
-            Partition(items, 0, items.Count);
+            Partition(items, 0, items.Count-1);
         }
 
         private void Partition(IList<T> items, int startIndex, int endIndex)
         {
-            if (startIndex == endIndex)
+            if (startIndex >= endIndex)
                 return;
 
             int pivotIndex = ChoosePivotIndex(items, startIndex, endIndex);
             T pivot = items[pivotIndex];
             Swap(items, startIndex, pivotIndex);
             int partitionIndex = startIndex + 1;
-            for (int frontierIndex = partitionIndex; frontierIndex < endIndex; frontierIndex++)
+            for (int frontierIndex = partitionIndex; frontierIndex <= endIndex; frontierIndex++)
             {
                 if (items[frontierIndex].CompareTo(pivot) < 0)
                 {
@@ -47,7 +47,7 @@ namespace mattnedrich.algorithms.sorting
             items[partitionIndex - 1] = pivot;
 
             // recursively sort left half
-            Partition(items, startIndex, partitionIndex - 1);
+            Partition(items, startIndex, partitionIndex - 2);
             // recursively sort right half
             Partition(items, partitionIndex, endIndex);
         }
